@@ -45,6 +45,8 @@ sudo rm \
 	"${HOME}/.cargo" \
 	"${HOME}/.rustup" \
 	"${HOME}/linuxbrew" \
+	'/home/linuxbrew' \
+	'/home/packer' \
 	'/etc/cni/net.d' \
 	'/etc/docker' \
 	'/etc/mono' \
@@ -54,6 +56,7 @@ sudo rm \
 	'/opt/az' \
 	'/usr/lib/heroku' \
 	'/usr/lib/mono' \
+	'/usr/lib/llvm-'* \
 	'/usr/libexec/docker' \
 	'/usr/local/lib/android' \
 	'/usr/local/share/man' \
