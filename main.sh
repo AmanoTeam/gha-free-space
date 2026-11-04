@@ -1,43 +1,63 @@
 #!/bin/bash
 
+declare -ra packages=(
+	'*apache2*'
+	'*docker*'
+	'*dotnet*'
+	'*firefox*'
+	'*google*'
+	'*gstreamer*'
+	'*jdk*'
+	'*nginx*'
+	'*php*'
+	'*ruby*'
+	'*wayland*'
+	'ant'
+	'auto*'
+	'azure-cli'
+	'bind9*'
+	'binutils*'
+	'build-essential'
+	'buildah'
+	'clang*'
+	'container*'
+	'fonts*'
+	'gcc-11'
+	'gcc-12'
+	'gh'
+	'glib*'
+	'kubectl'
+	'libllvm*'
+	'libmono*'
+	'lld*'
+	'llvm*'
+	'mercurial*'
+	'microsoft-edge-stable'
+	'mysql*'
+	'postgresql*'
+	'snapd'
+	'vim*'
+	'x11*'
+	'xdg*'
+)
+
 sudo apt purge \
 	--allow-remove-essential \
 	--auto-remove \
-	'*apache2*' \
-	'*docker*' \
-	'*dotnet*' \
-	'*firefox*' \
-	'*google*' \
-	'*gstreamer*' \
-	'*jdk*' \
-	'*nginx*' \
-	'*php*' \
-	'*ruby*' \
-	'*wayland*' \
-	'auto*' \
-	'azure-cli' \
-	'bind9*' \
-	'binutils*' \
-	'build-essential' \
-	'clang*' \
-	'container*' \
-	'fonts*' \
-	'gcc-9' \
-	'gcc-10' \
-	'gcc-11' \
-	'gcc-12' \
-	'gh' \
-	'glib*' \
-	'libmono*' \
-	'lld*' \
-	'llvm*' \
-	'mercurial*' \
-	'mysql*' \
-	'postgresql*' \
-	'powershell' \
-	'vim*' \
-	'x11*' \
-	'xdg*'
+	"${packages[@]}"
+
+mv '/opt/runner-cache' '/home/runner'
+
+for directory in '/home/runner/actions-runner/cached/'*; do
+	unlink "${directory}/externals"
+	
+	ln \
+		--symbolic \
+		--relative \
+		--force \
+		'/home/runner/runner-cache/externals' \
+		"${directory}"
+done
 
 sudo rm \
 	--recursive \
@@ -68,6 +88,8 @@ sudo rm \
 	'/usr/share/swift' \
 	'/var/lib/apache2' \
 	'/var/lib/gems' \
+	'/var/lib/snapd' \
+	'/snap' \
 	'/var/log' \
 	'/usr/local/.ghcup' \
 	'/usr/local/aws-sam-cli' \
